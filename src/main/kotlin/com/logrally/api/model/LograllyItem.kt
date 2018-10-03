@@ -14,8 +14,10 @@
 
 package com.logrally.api.model
 
-import com.squareup.moshi.Json
-import com.squareup.moshi.JsonClass
+import kotlinx.serialization.Optional
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
+import kotlinx.serialization.Transient
 import java.nio.charset.StandardCharsets
 import java.security.MessageDigest
 
@@ -24,19 +26,25 @@ import java.security.MessageDigest
  *
  * @author jansorg
  */
-@JsonClass(generateAdapter = true)
+@Serializable
 data class LograllyItem(
         val language: String,
         val stack: String,
         val projectId: String,
-        @Json(name = "occurrences") internal val _occurrences: Int? = null,
-        @Json(name = "guid") internal val _guid: String? = null,
-        @Json(name = "id") internal val _id: String? = null
+        @Optional @SerialName("occurrences") internal val _occurrences: Int? = null,
+        @Optional @SerialName("guid") internal val _guid: String? = null,
+        @Optional @SerialName("id") internal val _id: String? = null
 ) {
+    @Transient
     val id: String get() = _id ?: throw IllegalStateException("id not defined")
+
+    @Transient
     val guid: String get() = _guid ?: throw IllegalStateException("guid not defined")
+
+    @Transient
     val occurrences: Int get() = _occurrences ?: throw IllegalStateException("occurrences not defined")
 
+    @Transient
     val md5Hash by lazy {
         val digest = MessageDigest.getInstance("MD5")
 

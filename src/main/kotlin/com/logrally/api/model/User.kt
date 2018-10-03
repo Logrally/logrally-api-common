@@ -14,14 +14,17 @@
 
 package com.logrally.api.model
 
-import com.squareup.moshi.Json
-import com.squareup.moshi.JsonClass
+import kotlinx.serialization.Optional
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
+import kotlinx.serialization.Transient
 
 /**
  * A user stored in the Logrally database.
  */
-@JsonClass(generateAdapter = true)
-data class User(val username: String, val email: String, @Json(name = "id") val _id: String? = null) {
+@Serializable
+data class User(val username: String, val email: String, @Optional @SerialName("id") val _id: String? = null) {
+    @Transient
     val id: String get() = _id ?: throw IllegalStateException("id is undefined")
 }
 
@@ -29,7 +32,7 @@ data class User(val username: String, val email: String, @Json(name = "id") val 
  * The message used to perform a login.
  * @author jansorg
  */
-@JsonClass(generateAdapter = true)
+@Serializable
 data class LoginMessage(val username: String, val password: String) {
     override fun toString(): String {
         return "LoginMessage(${username})"
@@ -40,7 +43,7 @@ data class LoginMessage(val username: String, val password: String) {
  * The message to create a new user.
  * @author jansorg
  */
-@JsonClass(generateAdapter = true)
+@Serializable
 data class CreateUserMessage(val user: User, val password: String) {
     override fun toString(): String {
         return "CreateUserMessage(${user.username})"

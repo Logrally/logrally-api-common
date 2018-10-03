@@ -15,11 +15,11 @@
 package com.logrally.api.http.response
 
 import com.logrally.api.model.User
-import com.squareup.moshi.JsonClass
+import kotlinx.serialization.Serializable
 
 /**
  *
  * @author jansorg
  */
-@JsonClass(generateAdapter = true)
+@Serializable
 data class LoginResponse(val user: User, val token: String)

@@ -14,17 +14,21 @@
 
 package com.logrally.api.model
 
-import com.squareup.moshi.Json
-import com.squareup.moshi.JsonClass
+import kotlinx.serialization.Optional
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
+import kotlinx.serialization.Transient
 
 /**
  * @author jansorg
  */
-@JsonClass(generateAdapter = true)
-data class Organisation(val uniqueName: String, @Json(name = "ownerId") internal val _ownerId: String? = null, @Json(name = "id") internal val _id: String? = null) {
-    val id: String
-        get() = _id ?: throw IllegalStateException("id value not defined")
+@Serializable
+data class Organisation(val uniqueName: String,
+                        @Optional @SerialName("ownerId") internal val _ownerId: String? = null,
+                        @Optional @SerialName("id") internal val _id: String? = null) {
+    @Transient
+    val id: String get() = _id ?: throw IllegalStateException("id value not defined")
 
-    val ownerId: String
-        get() = _ownerId ?: throw IllegalStateException("ownerId value not defined")
+    @Transient
+    val ownerId: String get() = _ownerId ?: throw IllegalStateException("ownerId value not defined")
 }

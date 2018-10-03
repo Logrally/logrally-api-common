@@ -14,12 +14,13 @@
 
 package com.logrally.api.model
 
-val moshi = com.squareup.moshi.Moshi.Builder().build()
+import kotlinx.serialization.internal.StringSerializer
+import kotlinx.serialization.serializer
 
-val userAdapter = moshi.adapter(User::class.java)
-val organisationAdapter = moshi.adapter(Organisation::class.java)
-val projectAdapter = moshi.adapter(Project::class.java)
-val itemAdapter = moshi.adapter(LograllyItem::class.java)
-val occurrenceAdapter = moshi.adapter(LograllyOccurrence::class.java)
+val userAdapter = User::class.serializer()
+val organisationAdapter = Organisation::class.serializer()
+val projectAdapter = Project::class.serializer()
+val itemAdapter = LograllyItem::class.serializer()
+val occurrenceAdapter = LograllyOccurrence::class.serializer()
 
-val stringAdapter = moshi.adapter(String::class.java)
+val stringAdapter = StringSerializer

@@ -14,20 +14,24 @@
 
 package com.logrally.api.model
 
-import com.squareup.moshi.Json
-import com.squareup.moshi.JsonClass
+import kotlinx.serialization.Optional
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
+import kotlinx.serialization.Transient
 
 /**
  * A project describes software which was deployed and may receive items and occurrences.
  * @author jansorg
  */
-@JsonClass(generateAdapter = true)
+@Serializable
 data class Project(
         val shortName: String,
         val name: String,
         val description: String? = null,
         val organisationId: String,
-        @Json(name = "id") val _id: String? = null
+        @Optional @SerialName("id") val _id: String? = null
 ) {
-    val id: String get() = _id ?: throw IllegalStateException("id not defined")
+    @Transient
+    val id: String
+        get() = _id ?: throw IllegalStateException("id not defined")
 }

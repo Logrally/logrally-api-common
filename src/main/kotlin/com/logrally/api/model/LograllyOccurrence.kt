@@ -14,25 +14,28 @@
 
 package com.logrally.api.model
 
-import com.squareup.moshi.Json
-import com.squareup.moshi.JsonClass
+import kotlinx.serialization.Optional
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
+import kotlinx.serialization.Transient
 
 /**
  * An occurrence of an existing item. Items with duplicate data are stored as occurrences.
  * @author jansorg
  */
-@JsonClass(generateAdapter = true)
+@Serializable
 data class LograllyOccurrence(
         val item: LograllyItem,
         val title: String? = null,
         val comment: String? = null,
         val timestamp: Long = System.currentTimeMillis(),
-        @Json(name = "id") internal val _id: String? = null,
+        @Optional @SerialName("id") internal val _id: String? = null,
         /**
          * Optional set of custom properties to store with this occurrence.
          */
-        override val properties: Map<String, Any>? = null
+        @Optional override val properties: Map<String, Any>? = null
 ) : DynamicProperties {
 
+    @Transient
     val id: String get() = _id ?: throw IllegalStateException("id not defined")
 }
