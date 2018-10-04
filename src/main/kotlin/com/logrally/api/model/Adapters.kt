@@ -15,12 +15,22 @@
 package com.logrally.api.model
 
 import kotlinx.serialization.internal.StringSerializer
+import kotlinx.serialization.list
 import kotlinx.serialization.serializer
 
 val userAdapter = User::class.serializer()
+val userListAdapter = userAdapter.list
+
 val organisationAdapter = Organisation::class.serializer()
+val organisationListAdapter = organisationAdapter.list
+
 val projectAdapter = Project::class.serializer()
+val projectListAdapter = projectAdapter.list
+
 val itemAdapter = LograllyItem::class.serializer()
+val itemListAdapter = itemAdapter.list
+
 val occurrenceAdapter = LograllyOccurrence::class.serializer()
+val occurrenceListAdapter = occurrenceAdapter.list
 
 val stringAdapter = StringSerializer
